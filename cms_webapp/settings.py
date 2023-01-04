@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from config import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,24 +21,42 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0#@cuxy_4^eyo%w%=d-cnv#qz!57h5!n*=cs=c73sb(rs57-b_'
+SECRET_KEY = config.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
+
+    # Optional but strongly recommended component for DjangoCMS; provides some styling to make CMS administration
+    # components easier to work with.
+    # It needs to be placed BEFORE django.contrib.admin.
+    'djangocms_admin_style',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # DjangoCMS needs to use Django's django.contrib.sites framework.SITE_ID in the settings needs to be set up.
+    # SITE_ID = 1 will suffice.
+    'django.contrib.sites',
+
+    # cms and menus are core DjangoCMS modules.
+    'cms',
+    'menus',
+
+    # django-treebeard is used to manage DjangoCMS's page and plugin tree.
+    'treebeard',
 ]
+
+# SITE_ID for django.contrib.sites framework - see INSTALLED_APPS
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,8 +73,7 @@ ROOT_URLCONF = 'cms_webapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,10 +93,20 @@ WSGI_APPLICATION = 'cms_webapp.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # Add DB name or path to db file if using sqlite3.
+        'NAME': config.POSTGRES_DB,
+        'USER': config.POSTGRES_USER,
+        'PASSWORD': config.POSTGRES_PASSWORD,
+        'HOST': config.POSTGRES_HOST,
+        'PORT': config.POSTGRES_PORT,
+    },
 }
 
 
@@ -104,7 +132,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# Set up the languages of the project you want to use here (LANGUAGE_CODE setting is required by DjangoCMS).
+LANGUAGE_CODE = 'en'
+LANGUAGES = [
+    ('en', 'English'),
+    ('de', 'German'),
+]
 
 TIME_ZONE = 'UTC'
 
