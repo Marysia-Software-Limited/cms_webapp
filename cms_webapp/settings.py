@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 For more information and full documentation (the latest stable version) DjangoCMS, see
 https://docs.django-cms.org/en/latest/
 """
-
+import os
 from pathlib import Path
 
 # import cms.middleware.toolbar
@@ -187,9 +187,18 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
+# Static files root needs to be updated for production!
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+
 STATIC_URL = 'static/'
+
+# Media files uploaded by the user.
+# Media files root needs to be updated for production!
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

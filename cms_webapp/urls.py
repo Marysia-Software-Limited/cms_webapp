@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +25,8 @@ urlpatterns = [
     # It should come as last to allow for specific urls
     # for other applications to be detected first.
     re_path(r'^', include('cms.urls'))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Media files uploaded by the user.
+# Media files root needs to be updated for production!
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
