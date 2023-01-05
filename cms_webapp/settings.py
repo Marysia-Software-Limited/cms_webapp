@@ -72,9 +72,25 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'mptt',
 
-    # djnagocms_text_ckeditor is the default text editor for DjangoCMS endorsed by them
+    # djangocms_text_ckeditor is the default text editor for DjangoCMS endorsed by them
     # https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
     'djangocms_text_ckeditor',
+
+    # other useful plugins recommended by DjangoCMS;
+    # more infor about commonly used plugins at
+    # https://docs.django-cms.org/en/latest/topics/commonly_used_plugins.html#commonly-used-plugins
+    # Custom plugins creation docs are here: https://docs.django-cms.org/en/latest/how_to/custom_plugins.html
+
+    # NOTE: one of the plugins below forced downgrading djangoCMS's app
+    # treebeard from 4.6.0 to 4.4.0;
+    # In case of issues uninstall and re-install one by one to ensure full compatibility.
+    'djangocms_link',
+    'djangocms_file',
+    'djangocms_picture',
+    'djangocms_video',
+    'djangocms_googlemap',
+    'djangocms_snippet',
+    'djangocms_style',
 
 ]
 
