@@ -4,3 +4,4 @@ django-cms>=3.11
 environ
 psycopg2
 packaging
+django-filer

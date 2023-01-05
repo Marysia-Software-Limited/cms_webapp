@@ -64,6 +64,14 @@ INSTALLED_APPS = [
     # It requires additional setting in TEMPLATES|context_processors
     'sekizai',
 
+    # django-filer providing file and images management for djangoCMS
+    # and its dependencies: easy_thumbnails for creating new versions of images in different sizes
+    #                       djangoMPTT for managing the tree structure of folders for Filer
+    # https://django-filer.readthedocs.io/en/latest/
+    'filer',
+    'easy_thumbnails',
+    'mptt',
+
 ]
 
 # SITE_ID for django.contrib.sites framework - see INSTALLED_APPS
@@ -125,6 +133,17 @@ TEMPLATES = [
 CMS_TEMPLATES = [
     ('base.html', 'Home page template'),
 ]
+
+# THUMBNAIL_HIGH_RESOLUTION and THUMBNAIL_PROCESSORS
+# settings below are for Filer and easy_thumbnails apps
+THUMBNAIL_HIGH_RESOLUTION = True
+
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters'
+)
 
 WSGI_APPLICATION = 'cms_webapp.wsgi.application'
 
