@@ -8,9 +8,15 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
+
+For more information and full documentation (the latest stable version) DjangoCMS, see
+https://docs.django-cms.org/en/latest/
 """
 
 from pathlib import Path
+
+import cms.middleware.toolbar
+
 from config import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -53,20 +59,38 @@ INSTALLED_APPS = [
 
     # django-treebeard is used to manage DjangoCMS's page and plugin tree.
     'treebeard',
+
+    # django-sekizai is required for static files management for DjangoCMS
+    # It requires additional setting in TEMPLATES|context_processors
+    'sekizai',
+
 ]
 
 # SITE_ID for django.contrib.sites framework - see INSTALLED_APPS
 SITE_ID = 1
 
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # middleware required by DjangoCMS:
+    # 'cms.middleware.utils.ApphookReloadMiddleware',
+
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
 ]
+
+# for DjangoCMS
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 ROOT_URLCONF = 'cms_webapp.urls'
 
@@ -81,6 +105,15 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # required by DjangoCMS
+                'cms.context_processors.cms_settings'
+
+                # django_sekizai setting required for DjangoCMS
+                'sekizai.context_processors.sekizai',
+
+                # required by DjangoCMS internationalization
+                'django.template.context_processors.i18n'
             ],
         },
     },
