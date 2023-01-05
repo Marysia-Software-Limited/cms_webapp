@@ -5,3 +5,4 @@ environ
 psycopg2
 packaging
 django-filer
+djangocms_text_ckeditor

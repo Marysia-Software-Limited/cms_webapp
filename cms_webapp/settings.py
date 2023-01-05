@@ -72,6 +72,10 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'mptt',
 
+    # djnagocms_text_ckeditor is the default text editor for DjangoCMS endorsed by them
+    # https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
+    'djangocms_text_ckeditor',
+
 ]
 
 # SITE_ID for django.contrib.sites framework - see INSTALLED_APPS
