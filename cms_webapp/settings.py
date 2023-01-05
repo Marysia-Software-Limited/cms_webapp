@@ -15,7 +15,7 @@ https://docs.django-cms.org/en/latest/
 
 from pathlib import Path
 
-import cms.middleware.toolbar
+# import cms.middleware.toolbar
 
 from config import config
 
@@ -71,6 +71,8 @@ SITE_ID = 1
 
 MIDDLEWARE = [
 
+    # ApphookReloadMiddleware useful for DjangoCMS
+    'cms.middleware.utils.ApphookReloadMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,7 +83,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     # middleware required by DjangoCMS:
-    # 'cms.middleware.utils.ApphookReloadMiddleware',
 
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
@@ -107,7 +108,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 # required by DjangoCMS
-                'cms.context_processors.cms_settings'
+                'cms.context_processors.cms_settings',
 
                 # django_sekizai setting required for DjangoCMS
                 'sekizai.context_processors.sekizai',
