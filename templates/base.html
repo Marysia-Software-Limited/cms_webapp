@@ -1,0 +1,32 @@
+{# loads the template tag libraries used in the template #}
+{% load cms_tags sekizai_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+{#    extracts the page's page_title attribute #}
+    <title>{% page_attribute "page title" %}</title>
+
+{#    Sekizai template tag that load block of HTML defined by Django applications #}
+{#    DjangoCMS defines block for css and recommends placing it just before the </head> tag #}
+    {% render_block "css" %}
+</head>
+
+<body>
+
+{# cms_toolbar renders the djangoCMS toolbar #}
+    {% cms_toolbar %}
+
+{# defines a placeholder where plugins can be inserted #}
+{# A template requires at least one placeholder template tag to be useful for djangoCMS #}
+{# The name of the placeholder is simply descriptive one, for the reference #}
+    {% placeholder 'content' %}
+
+{# Sekizai template tag that load block of HTML defined by Django applications #}
+{# DjangoCMS defines block for JS and recommends placing it just before the </body> tag #}
+    {% render_block 'js' %}
+</body>
+
+</html>

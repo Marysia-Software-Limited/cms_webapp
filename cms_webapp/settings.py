@@ -120,6 +120,12 @@ TEMPLATES = [
     },
 ]
 
+# DjangoCMS requires at least one template for its pages; they are defined here.
+# The first template on the list is a default template for the project.
+CMS_TEMPLATES = [
+    ('base.html', 'Home page template'),
+]
+
 WSGI_APPLICATION = 'cms_webapp.wsgi.application'
 
 
